@@ -5,6 +5,7 @@ const path = require('path')
 const connectDB = require('./config/db')
 
 const authRoutes = require('./routes/authRoute')
+const bookRoutes = require('./routes/bookRoute')
 
 const app = express()
 
@@ -27,6 +28,7 @@ app.use(express.json())
 app.use('/backend/uploads', express.static(path.join(__dirname, "uploads")))
 
 app.use('/api/auth', authRoutes)
+app.use('/api/book', bookRoutes)
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => console.log(`Server on port ${PORT}`))

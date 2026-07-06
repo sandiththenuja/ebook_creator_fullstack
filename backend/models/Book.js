@@ -12,7 +12,8 @@ const bookSchema = new mongoose.Schema({
     subtitle: {type: String, default: ""},
     author: {type: String, required: true},
     coverImage: {type: String, default: ""},
-    chapters: {type: String, enum: ["draft", "published"], default: "draft"}
+    chapters: [chapterSchema],
+    status: {type: String, enum: ["draft", "published"], default: "draft"}
 },
 {timestamps: true}
 )
