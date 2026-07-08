@@ -13,6 +13,7 @@ const MarkdownIt = require('markdown-it')
 const Book = require('../models/Book')
 const path = require('path')
 const fs = require('fs')
+// const { fonts } = require('pdfkit/js/page')
 
 const md = new MarkdownIt()
 
@@ -563,6 +564,190 @@ const renderInlineTokens = (doc, tokens, options = {}) => {
 
     for(let i=0; i<tokens.length; i++){
         const token = tokens[i]
+
+        if(token.type === "text"){
+            textBuffer += token.content
+        }else if(token.type === "strong_open"){
+            flushBuffer()
+            currentFont = TYPOGRAPHY.fonts.serifBold
+        }else if(token.type === "strong_close"){
+            flushBuffer()
+            currentFont = TYPOGRAPHY.fonts.serif
+        }else if(token.type === "em_open"){
+            flushBuffer()
+            currentFont = TYPOGRAPHY.fonts.serifItalic
+        }else if(token.type === "em_close"){
+            flushBuffer()
+            currentFont = TYPOGRAPHY.fonts.serif
+        }else if(token.type === "code_inline"){
+            flushBuffer()
+            doc.font("Courier").text(token.content, {
+                ...baseOptions,
+                continued: true
+            })
+            doc.font(currentFont)
+        }
+    }
+
+    if(textBuffer){
+        doc.font(currentFont).text(textBuffer, {
+            ...baseOptions,
+            continued: false
+        })
+    }else{
+        doc.text("", {continued: false})
+    }
+}
+
+const renderMarkDown = (doc, markDown) => {
+    if(!markDown || markDown.trim() === "") return
+
+    const tokens = md.parse(markDown, {})
+    let inList = false
+    let listType = null
+    let orderedListCounter = 1
+
+    for(let i=0; i<tokens.length; i++){
+        const token = tokens[i]
+
+        try {
+            if(token.type === "heading_open"){
+                const level = parseInt(token.tag.substring(1), 10)
+                let fontSize
+
+                switch(level){
+                    case 1:
+                        fontSize = TYPOGRAPHY.sizes.h1
+                        break
+                    case 2:
+                        fontSize = TYPOGRAPHY.sizes.h2
+                        break
+                    case 3:
+                        fontSize = TYPOGRAPHY.sizes.h3
+                        break
+                    default:
+                        fontSize = TYPOGRAPHY.sizes.h3
+                }
+
+                doc.moveDown(TYPOGRAPHY.spacing.headingSpacing.before / TYPOGRAPHY.sizes.body)
+
+                doc
+                .font(TYPOGRAPHY.fonts.sansBold)
+                .fontSize(fontSize)
+                .fillColor(TYPOGRAPHY.colors.heading)
+
+                if(i + 1 < tokens.length && tokens[i + 1].type === "inline"){
+                    renderInlineTokens(doc, tokens[i+1].children, {
+                        align: "left",
+                        lineGap: 0
+                    })
+                    i++
+                }
+                doc.moveDown(TYPOGRAPHY.spacing.headingSpacing.after / TYPOGRAPHY.sizes.body)
+
+                if(i + 1 < tokens.length && tokens[i + 1].type === "heading_close"){
+                    i++
+                }
+            }else if(token.type === "paragraph_open"){
+                doc
+                .font(TYPOGRAPHY.fonts.sans)
+                .fontSize(TYPOGRAPHY.sizes.body)
+                .fillColor(TYPOGRAPHY.colors.text)
+
+                if(i + 1 < tokens.length && tokens[i+1].type === "inline"){
+                    renderInlineTokens(doc, tokens[i+1].children, {
+                        align: "justify",
+                        lineGap: 2
+                    })
+                    i++
+                }
+
+                if(!inList){
+                    doc.moveDown(TYPOGRAPHY.spacing.paragraphSpacing / TYPOGRAPHY,sizes.body)
+                }
+
+                if(i + 1 < tokens.length && tokens[i+1].type === "paragraph_close"){
+                    i++
+                }
+
+            }else if(token.type === "bullet_list_open"){
+                inList = true
+                listType = "bullet"
+                doc.moveDown(TYPOGRAPHY.spacing.listSpacing / TYPOGRAPHY.sizes.body)
+            }else if(token.type === "bullet_list_close"){
+                inList = false
+                listType = null
+                doc.moveDown(TYPOGRAPHY.spacing.paragraphSpacing / TYPOGRAPHY.sizes.body)
+            }else if(token.type === "ordered_list_open"){
+                inList = true
+                listType = "ordered"
+                orderedListCounter = 1
+                doc.moveDown(TYPOGRAPHY.spacing.listSpacing / TYPOGRAPHY.sizes.body)
+            }else if(token.type === "ordered_list_close"){
+                inList = false
+                listType = null
+                orderedListCounter = 1
+                doc.moveDown(TYPOGRAPHY.spacing.paragraphSpacing / TYPOGRAPHY.sizes.body)
+            }else if(token.type === "list_item_open"){
+                let bullet = ""
+                if(listType === "bullet"){
+                    bullet = "* "
+                }else if(listType === "ordered"){
+                    bullet = `${orderedListCounter}. `
+                    orderedListCounter++
+                }
+
+                doc
+                .font(TYPOGRAPHY.fonts.serif)
+                .fontSize(TYPOGRAPHY.sizes.body)
+                .fillColor(TYPOGRAPHY.colors.text)
+
+                doc.text(bullet, {indent: 20, continued: true})
+
+                for(let j = i + 1; j < tokens.length; j++){
+                    if(tokens[j].type === "inline" && tokens[j].children){
+                        renderInlineTokens(doc, tokens[j].children, {
+                            align: "left",
+                            lineGap: 2
+                        })
+                        break
+                    }else if(tokens[j].type === "list_item_close"){
+                        break
+                    }
+                }
+
+                doc.moveDown(TYPOGRAPHY.spacing.listSpacing / TYPOGRAPHY.sizes.body)
+
+            }else if(token.type === "code_block" || token.type === "fence"){
+                doc.moveDown(TYPOGRAPHY.spacing.paragraphSpacing / TYPOGRAPHY.sizes.body)
+
+                doc
+                .font("Courier")
+                .fontSize(9)
+                .fillColor(TYPOGRAPHY.colors.text)
+                .text(token.content, {
+                    indent: 20,
+                    align: "left"
+                })
+
+                doc.font(TYPOGRAPHY.fonts.serif).fontSize(TYPOGRAPHY.sizes.body)
+
+                doc.moveDown(TYPOGRAPHY.spacing.paragraphSpacing / TYPOGRAPHY.sizes.body)
+
+            }else if(token.type === "hr"){
+                doc.moveDown()
+                const y = doc.y
+                doc
+                .moveTo(doc.page.margins.left, y)
+                .lineTo(doc.page.width - doc.page.margins.right, y)
+                .stroke()
+
+                doc.moveDown()
+            }
+        } catch (tokenErr) {
+            console.error("Error processing token", token.type, tokenErr);
+            continue
+        }
     }
 }
 
