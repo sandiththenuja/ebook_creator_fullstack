@@ -11,7 +11,7 @@ export const useAuth = () => {
 }
 
 export const AuthProvider = ({children}) => {
-  const [userr, setUser] = useState(null)
+  const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
