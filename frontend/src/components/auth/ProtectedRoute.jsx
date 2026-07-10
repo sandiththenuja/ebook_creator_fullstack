@@ -1,21 +1,25 @@
-import React from 'react'
-import { Navigate, useLocation } from 'react-router-dom'
+import React from 'react';
+import { Navigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
-const ProtectedRoute = ({children}) => {
-  const isAuthenticated = false
-  const loading = false
-  const location = useLocation()
+const ProtectedRoute = ({ children, requiredRole }) => {
+    const { user, loading, isAuthenticated } = useAuth();
+    const location = useLocation();
 
-  if(loading){
-    // add a loading animation
-    return <div>Loading...</div>
-  }
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            </div>
+        );
+    }
 
-  if(!isAuthenticated){
-    return <Navigate to="/login" state={{from: location}} replace />
-  }
+    if (!isAuthenticated || !user) {
+        console.log('Unauthorized, redirecting to login...');
+        return <Navigate to="/login" state={{ from: location }} replace />;
+    }
+    
+    return children;
+};
 
-  return children
-}
-
-export default ProtectedRoute
+export default ProtectedRoute;

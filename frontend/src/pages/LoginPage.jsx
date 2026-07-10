@@ -44,7 +44,7 @@ const LoginPage = () => {
 
   return (
     <div>
-      <form onSubmit={handleChange}>
+      <form onSubmit={handleSubmit}>
         <InputField
             label="Email"
             name="email"

@@ -1,8 +1,15 @@
 import React from 'react'
 
-const Modal = () => {
+const Modal = ({isOpen, onClose, title, children}) => {
   return (
-    <div>Modal</div>
+    <div>
+      <div className="" onClick={onClose}>x</div>
+
+      <h3>{title}</h3>
+      <button onClick={onClose()}>x</button>
+
+      <div>{children}</div>
+    </div>
   )
 }
 
