@@ -1,12 +1,32 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import Button from '../ui/Button'
+import {Sparkles, Trash2} from 'lucide-react'
 
 const SortableItem = ({chapter, index, selectedChapterIndex, onSelectChapter, onDeleteChapter, onGenerateChapterContent, isGenerating}) => {
     const {attributes, listeners, setnodeRef, transform, transition} = useSortable({id: chapter._id || `new-${index}`})
 
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition
+    }
+
     return (
-        <div></div>
+        <div ref={setnodeRef} style={style} className=''>
+            <button className={`flex flex-center text-sm ${selectedChapterIndex === index
+                ? "bg-violet-50/50 text-violet-800 font-semibold"
+                : "text-slate-600 hover:bg-slate-100"
+            }`} onClick={() => onSelectChapter(index)}>
+                {chapter.title}
+            </button>
+            <Button size='small' onClick={() => onGenerateChapterContent(index)} isLoading={isGenerating === index} title="Generate content with AI">
+                {isGenerating !== index && <Sparkles />}
+            </Button>
+
+            <Button size='small' onClick={() => onDeleteChapter(index)} title="Delete">
+                <Trash2 />
+            </Button>
+        </div>
     )
 }
 

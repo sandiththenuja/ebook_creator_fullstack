@@ -4,6 +4,11 @@ import axiosInstance from '../utils/axiosinstance'
 import { API_PATHS } from '../utils/apiPaths'
 import toast from 'react-hot-toast'
 import ChapterSideBar from '../components/editor/ChapterSideBar'
+import { ChevronDown, Edit, FileDown, FileText, Menu, Save } from 'lucide-react'
+import Dropdown, { DropdownItem } from '../components/ui/Dropdown'
+import Button from '../components/ui/Button'
+import ChapterEditorTab from '../components/editor/ChapterEditorTab'
+import BookDetailsTab from '../components/editor/BookDetailsTab'
 
 const EditorPage = () => {
   const {bookId} = useParams()
@@ -94,6 +99,7 @@ const EditorPage = () => {
     <>
       <div className="">
         {/* mobile sidebar */}
+        {isSidebarOpen && (
         <div
         role='dialog'
         aria-modal='true'>
@@ -120,6 +126,81 @@ const EditorPage = () => {
           </div>
           <div className="" aria-hidden='true'></div>
         </div>
+        )}
+
+        {/* desktop sidebar */}
+        <div className="">
+          <ChapterSideBar
+            book={book}
+            selectedChapterIndex={selectedChapterIndex}
+            onSelectChapter={(index) => {
+              setSelectedChapterIndex(index)
+              setIsSidebarOpen(false)
+            }}
+            onAddChapter={(handleAddChapter)}
+            onDeleteChapter={handleDeleteChapter}
+            onGenerateChapterContent={handleGenerateChapterContent}
+            isGenerating={isGenerating}
+            onReorderChapters={handleReorderChapters}
+          />
+        </div>
+
+        <main className="">
+          <header className="">
+            <button onClick={() => setIsSidebarOpen(true)}>
+              <Menu className='' />
+            </button>
+            <div className="">
+                <button onClick={() => setActiveTab("editor")} className={`${activeTab === "editor" ? "bg-white text-slate-800" : "text-slate-500 hover:text-slate-700"}`}>
+                  <Edit /> Editor
+                </button>
+
+                <button onClick={() => setActiveTab("details")} className={`${activeTab === "details" ? "bg-white text-slate-800" : "text-slate-500 hover:text-slate-700"}`}>
+                  <Edit /> Details
+                </button>
+            </div>
+
+            <div className="">
+              <Dropdown
+                trigger={
+                <Button variant='secondary' icon={FileDown}>
+                  Export
+                  <ChevronDown />
+                </Button>}
+              >
+                <DropdownItem onClick={handleExportDOC}>
+                  <FileText /> Export as DOC
+                </DropdownItem>
+              </Dropdown>
+
+              <Button
+                onClick={() => handleSaveChanges()}
+                isLoading={isSaving}
+                icon={Save}
+              >
+                Save changes
+              </Button>
+            </div>
+          </header>
+
+          <div className="">
+            {activeTab === "editor" ? (
+              <ChapterEditorTab
+                book={book}
+                selectedChapterIndex={selectedChapterIndex}
+                onChapterChange={handleChapterChange}
+                onGenerateChapterContent={handleGenerateChapterContent}
+                isGenerating={isGenerating} />
+            ) : (
+              <BookDetailsTab
+                book={book}
+                onBookChange={handleBookChange}
+                onCoverUpload={handleCoverImageUpload}
+                isUploading={isUploading}
+                fileInputRef={fileInputRef} />
+            )}
+          </div>
+        </main>
       </div>
     </>
   )
