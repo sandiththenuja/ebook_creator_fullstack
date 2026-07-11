@@ -14,7 +14,7 @@ const SortableItem = ({ chapter, index, selectedChapterIndex, onSelectChapter, o
       onDragEnd={onDragEnd}
       className={`flex items-center gap-1.5 p-1.5 rounded-lg transition-all duration-200 group ${
         isSelected
-          ? 'bg-gradient-to-r from-[#D1F8EF] to-[#A1E3F9]/50 text-[#3674B5] shadow-sm'
+          ? 'bg-linear-to-r from-[#D1F8EF] to-[#A1E3F9]/50 text-[#3674B5] shadow-sm'
           : 'hover:bg-[#D1F8EF]/50 text-[#3674B5]/70'
       } ${isDragging ? 'opacity-50 shadow-lg ring-2 ring-[#3674B5]/30' : ''}`}
     >
@@ -105,7 +105,7 @@ const ChapterSideBar = ({
 
   return (
     <aside className="w-72 bg-white border-r border-[#A1E3F9]/30 flex flex-col h-full shadow-sm">
-      <div className="p-4 border-b border-[#A1E3F9]/30 bg-gradient-to-r from-[#D1F8EF]/20 to-transparent">
+      <div className="p-4 border-b border-[#A1E3F9]/30 bg-linear-to-r from-[#D1F8EF]/20 to-transparent">
         <Button
           variant="secondary"
           size="sm"
@@ -117,7 +117,7 @@ const ChapterSideBar = ({
         </Button>
 
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-[#3674B5] to-[#578FCA] rounded-lg flex items-center justify-center flex-shrink-0">
+          <div className="w-8 h-8 bg-linear-to-br from-[#3674B5] to-[#578FCA] rounded-lg flex items-center justify-center shrink-0">
             <BookOpen className="w-4 h-4 text-white" />
           </div>
           <div className="flex-1 min-w-0">
