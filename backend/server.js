@@ -14,7 +14,10 @@ const app = express()
 // middleware to handle cors
 app.use(
     cors({
-        origin: "*",
+        origin: [
+        "https://ebook-creator-fullstack.vercel.app/", 
+        "http://localhost:5173"
+    ],
         methods: ["GET", "POST", "PUT", "DELETE"],
         allowedHeaders: ["Content-Type", "Authorization"]
     })
@@ -33,6 +36,10 @@ app.use('/api/auth', authRoutes)
 app.use('/api/book', bookRoutes)
 app.use('/api/ai', aiRoutes)
 app.use('/api/export', exportRoutes)
+
+app.get('/', (req, res) => {
+  res.send('Server is working')
+})
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => console.log(`Server on port ${PORT}`))
