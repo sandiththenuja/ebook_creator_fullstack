@@ -117,7 +117,7 @@ const DashboardLayout = ({ children }) => {
       <footer className="mt-auto border-t border-[#A1E3F9]/20 bg-white/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <p className="text-sm text-[#3674B5]/40 text-center">
-            © {new Date().getFullYear()} AI eBook Creator. All rights reserved.
+            © {new Date().getFullYear()} ST All Rights Reserved.
           </p>
         </div>
       </footer>
