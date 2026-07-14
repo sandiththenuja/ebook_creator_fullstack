@@ -41,7 +41,7 @@ app.get('/', (req, res) => {
   res.send('Server is working')
 })
 
-// maget22841@acoxs.com
+// maget22841@acoxs.com (railway email for backend api)
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => console.log(`Server on port ${PORT}`))
