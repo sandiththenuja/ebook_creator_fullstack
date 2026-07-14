@@ -22,7 +22,6 @@ const DashboardLayout = ({ children }) => {
 
   const navLinks = [
     { name: 'Dashboard', path: '/dashboard', icon: Home },
-    { name: 'My Books', path: '/dashboard', icon: Book },
     { name: 'Create Book', path: '/dashboard?create=true', icon: PlusCircle },
     { name: 'Profile', path: '/profile', icon: User },
   ]

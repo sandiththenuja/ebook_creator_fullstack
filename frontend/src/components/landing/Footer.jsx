@@ -57,7 +57,7 @@ const Footer = () => {
 
         <div className="mt-16 pt-8 border-t border-white/20 text-center">
           <p className="text-white/50 text-sm">
-            © {currentYear} AI eBook Creator. All rights reserved.
+            © {currentYear} ST All Rights Reserved.
           </p>
         </div>
       </div>

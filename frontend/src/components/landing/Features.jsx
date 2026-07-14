@@ -15,8 +15,8 @@ const Features = () => {
     },
     {
       icon: <Palette className="w-6 h-6 text-[#3674B5]" />,
-      title: "Beautiful Templates",
-      desc: "Professionally designed templates for your eBooks."
+      title: "Edit Templates",
+      desc: "Template editor for your eBooks."
     },
     {
       icon: <Zap className="w-6 h-6 text-[#3674B5]" />,
@@ -26,7 +26,7 @@ const Features = () => {
     {
       icon: <FileText className="w-6 h-6 text-[#3674B5]" />,
       title: "Multiple Formats",
-      desc: "Export to PDF, DOCX, and other formats."
+      desc: "Export to PDF, DOCX formats."
     },
     {
       icon: <Share2 className="w-6 h-6 text-[#3674B5]" />,

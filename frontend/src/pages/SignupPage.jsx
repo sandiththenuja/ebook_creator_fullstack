@@ -74,7 +74,7 @@ const SignupPage = () => {
             label="Email"
             name="email"
             type="email"
-            placeholder="abc@mail.com"
+            placeholder="user@mail.com"
             icon={Mail}
             value={formData.email}
             onChange={handleChange}
@@ -93,12 +93,12 @@ const SignupPage = () => {
             className="focus:ring-[#3674B5] focus:border-[#3674B5]"
           />
 
-          <div className="flex items-center">
+          {/* <div className="flex items-center">
             <input type="checkbox" className="rounded border-[#A1E3F9] text-[#3674B5] focus:ring-[#3674B5]" />
             <span className="ml-2 text-sm text-[#3674B5]/60">
               I agree to the <a href="#" className="text-[#3674B5] hover:underline">Terms</a> and <a href="#" className="text-[#3674B5] hover:underline">Privacy Policy</a>
             </span>
-          </div>
+          </div> */}
 
           <Button
             type="submit"

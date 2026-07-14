@@ -7,14 +7,14 @@ const Testimonials = () => {
       name: "Sarah Johnson",
       role: "Bestselling Author",
       text: "This platform revolutionized my writing process. I published my first eBook in just 3 days!",
-      rating: 5,
+      rating: 4,
       avatar: "SJ"
     },
     {
       name: "Michael Chen",
       role: "Content Creator",
       text: "The AI outline generator saved me hours of planning. Absolutely love this tool!",
-      rating: 5,
+      rating: 3,
       avatar: "MC"
     },
     {

@@ -5,7 +5,7 @@ import { API_PATHS } from '../utils/apiPaths'
 import toast from 'react-hot-toast'
 import DashboardLayout from '../components/layout/DashboardLayout'
 import InputField from '../components/ui/InputField'
-import { Mail, User, Sparkles, Save } from 'lucide-react'
+import { Mail, User, Sparkles, Save, UserRound } from 'lucide-react'
 import Button from '../components/ui/Button'
 
 const ProfilePage = () => {
@@ -56,7 +56,7 @@ const ProfilePage = () => {
         <div className="mb-8">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-linear-to-br from-[#3674B5] to-[#578FCA] rounded-xl flex items-center justify-center shadow-lg shadow-[#3674B5]/25">
-              <Sparkles className="w-5 h-5 text-white" />
+              <UserRound className="w-5 h-5 text-white" />
             </div>
             <div>
               <h1 className="text-2xl md:text-3xl font-bold text-[#3674B5]">Profile</h1>
@@ -106,7 +106,7 @@ const ProfilePage = () => {
         <div className="mt-6 p-4 bg-[#D1F8EF]/30 rounded-xl border border-[#A1E3F9]/30">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-[#3674B5]/10 rounded-full flex items-center justify-center">
-              <Sparkles className="w-4 h-4 text-[#3674B5]" />
+              <UserRound className="w-4 h-4 text-[#3674B5]" />
             </div>
             <div>
               <p className="text-sm text-[#3674B5] font-medium">Account Type</p>

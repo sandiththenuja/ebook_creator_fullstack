@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react'
-import { LogOut, User, Settings, BookOpen, ChevronDown, Sparkles } from 'lucide-react'
+import { LogOut, User, Settings, BookOpen, ChevronDown, Sparkles, UserRound } from 'lucide-react'
 
 const ProfileDropdown = ({ isOpen, onToggle, avatar, companyName, email, userRole, onLogout }) => {
   const dropdownRef = useRef(null)
@@ -47,7 +47,7 @@ const ProfileDropdown = ({ isOpen, onToggle, avatar, companyName, email, userRol
               </div>
             </div>
             <div className="mt-2 inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-[#3674B5]/10 rounded-full text-xs font-medium text-[#3674B5]">
-              <Sparkles className="w-3 h-3" />
+              <UserRound className="w-3 h-3" />
               {userRole || 'Member'}
             </div>
           </div>
@@ -60,10 +60,6 @@ const ProfileDropdown = ({ isOpen, onToggle, avatar, companyName, email, userRol
             <a href="/dashboard" className="flex items-center gap-3 px-4 py-2.5 text-sm text-[#3674B5] hover:bg-[#D1F8EF] transition-colors duration-150">
               <BookOpen className="w-4 h-4" />
               My Books
-            </a>
-            <a href="/settings" className="flex items-center gap-3 px-4 py-2.5 text-sm text-[#3674B5] hover:bg-[#D1F8EF] transition-colors duration-150">
-              <Settings className="w-4 h-4" />
-              Settings
             </a>
           </div>
 

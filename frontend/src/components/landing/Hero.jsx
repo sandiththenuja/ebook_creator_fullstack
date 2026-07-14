@@ -15,7 +15,6 @@ const Hero = () => {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
         <div className="flex flex-col items-center text-center">
           <Link to={isAuthenticated ? "/dashboard" : "/login"} className="group inline-flex items-center gap-2 px-4 py-2 bg-[#D1F8EF] border border-[#A1E3F9] rounded-full text-sm font-medium text-[#3674B5] hover:bg-[#A1E3F9] hover:border-[#578FCA] transition-all duration-300 hover:scale-105 shadow-sm">
-            <Sparkles className="w-4 h-4 text-[#3674B5]" />
             <span>Start creating for free</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
@@ -42,7 +41,7 @@ const Hero = () => {
           <div className="mt-12 flex flex-wrap justify-center gap-8">
             {[
               { icon: <Zap className="w-5 h-5 text-[#3674B5]" />, text: "AI-Powered Writing" },
-              { icon: <BookOpen className="w-5 h-5 text-[#3674B5]" />, text: "Professional Templates" },
+              { icon: <BookOpen className="w-5 h-5 text-[#3674B5]" />, text: "Edit Templates" },
               { icon: <CheckCircle className="w-5 h-5 text-[#3674B5]" />, text: "Instant Export" },
             ].map((item, i) => (
               <div key={i} className="flex items-center gap-2 text-sm font-medium text-[#3674B5] bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm border border-[#A1E3F9]/50 hover:border-[#578FCA] hover:shadow-md transition-all duration-200">
