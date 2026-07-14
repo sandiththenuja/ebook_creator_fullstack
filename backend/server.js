@@ -15,7 +15,7 @@ const app = express()
 app.use(
     cors({
         origin: [
-        "https://ebook-creator-fullstack.vercel.app/", 
+        "https://ebook-creator-fullstack.vercel.app", 
         "http://localhost:5173"
     ],
         methods: ["GET", "POST", "PUT", "DELETE"],
